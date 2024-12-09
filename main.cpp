@@ -109,11 +109,19 @@ void show_data(std::vector<Person> society) {
     }
     std::cout << std::endl;
     for (int id = 0; id < maxid; id++) {
-        for (int hbt = 0; hbt < hbts_n; hbt++) {
-            std::cout << "  |  " << society[hbt].get_friends_in_case()[id];
+        auto red = [](std::string msg) { return "\033[31m" + msg + "\033[0m"; };
+        auto green = [](std::string msg) { return "\033[32m" + msg + "\033[0m"; };
+        if (line_is_valid(id, society)) {
+            for (int hbt = 0; hbt < hbts_n; hbt++) {
+                std::cout << green("  |  ") << green(std::to_string(society[hbt].get_friends_in_case()[id]));
+            }
+            std::cout << green("  |") << std::endl;
+        } else {
+            for (int hbt = 0; hbt < hbts_n; hbt++) {
+                std::cout << red("  |  ") << red(std::to_string(society[hbt].get_friends_in_case()[id]));
+            }
+            std::cout << red("  |") << std::endl;
         }
-        std::string prove = line_is_valid(id, society)?"OK":"";
-        std::cout << "  |"<< prove << std::endl;
     }
 }
 
